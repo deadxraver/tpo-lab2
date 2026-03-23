@@ -3,7 +3,9 @@
 #include <cmath>
 #include <string>
 
-double base_math::sin(double x, int eps) const {
+base_math::base_math(double iterations) : eps(iterations) {}
+
+double base_math::sin(double x) const {
   while (x >= M_PI) {
     x -= 2 * M_PI;
   }
@@ -19,7 +21,7 @@ double base_math::sin(double x, int eps) const {
   return res;
 }
 
-double base_math::ln(double x, int eps) const {
+double base_math::ln(double x) const {
   if (x <= 0)
     throw std::string("ln: recieved x <= 0 in ln");
   int k = 0;
@@ -35,17 +37,17 @@ double base_math::ln(double x, int eps) const {
   return res + k * M_LN2;
 }
 
-double ext_math::cos(double x, int eps) const {
-  return std::pow(1 - std::pow(sin(x, eps), 2), 0.5);
+double ext_math::cos(double x) const {
+  return std::pow(1 - std::pow(sin(x), 2), 0.5);
 }
 
-double ext_math::sec(double x, int eps) const {
-  double cos_val = cos(x, eps);
+double ext_math::sec(double x) const {
+  double cos_val = cos(x);
   if (cos_val == 0)
     throw std::string("sec: cos(x) should not be 0");
   return 1 / cos_val;
 }
 
-double ext_math::log(double x, double base, int eps) const {
-  return ln(x, eps) / ln(base, eps);
+double ext_math::log(double x, double base) const {
+  return ln(x) / ln(base);
 }

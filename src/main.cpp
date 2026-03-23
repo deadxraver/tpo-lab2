@@ -9,7 +9,12 @@ int main(int argc, char* argv[]) {
   }
   double x = std::stod(argv[1]);
   double eps = std::stod(argv[2]);
-  base_math bm;
-  std::cout << bm.ln(x, eps) << std::endl;
+  ext_math em(eps);
+  try {
+    std::cout << em.log(x, 10) << std::endl;
+  } catch (std::string err) {
+    std::cerr << err << std::endl;
+    return -EINVAL;
+  }
   return 0;
 }

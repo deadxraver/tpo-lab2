@@ -10,6 +10,6 @@ int main(int argc, char* argv[]) {
   double x = std::stod(argv[1]);
   double eps = std::stod(argv[2]);
   base_math bm;
-  std::cout << bm.sin(x, eps) << std::endl;
+  std::cout << bm.ln(x, eps) << std::endl;
   return 0;
 }

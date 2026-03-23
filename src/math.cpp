@@ -51,3 +51,10 @@ double ext_math::sec(double x) const {
 double ext_math::log(double x, double base) const {
   return ln(x) / ln(base);
 }
+
+double full_math::mega_function(double x) const {
+  if (x <= 0) {
+    return (((std::pow(std::pow(cos(x), 2), 2) + sin(x)) / cos(x)) - (sec(x) + std::pow(cos(x), 2)));
+  }
+  return ((((std::pow(log(x, 10), 3) * log(x, 2)) * log(x, 2)) - ((log(x, 3) + ln(x)) + ln(x))) * ln(x));
+}

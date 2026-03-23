@@ -9,9 +9,9 @@ int main(int argc, char* argv[]) {
   }
   double x = std::stod(argv[1]);
   double eps = std::stod(argv[2]);
-  ext_math em(eps);
+  full_math fm(eps);
   try {
-    std::cout << em.log(x, 10) << std::endl;
+    std::cout << fm.mega_function(x) << std::endl;
   } catch (std::string err) {
     std::cerr << err << std::endl;
     return -EINVAL;

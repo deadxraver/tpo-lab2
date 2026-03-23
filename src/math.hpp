@@ -16,3 +16,9 @@ public:
   virtual double log(double x, double base) const;
   using base_math::base_math;
 };
+
+class full_math : public ext_math {
+public:
+  virtual double mega_function(double x) const;
+  using ext_math::ext_math;
+};

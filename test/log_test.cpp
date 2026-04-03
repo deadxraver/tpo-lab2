@@ -9,9 +9,9 @@ constexpr double PRECISION = 10000;
 }
 
 TEST(math_test, log_uses_lns) {
-  mock_math mmath(10000);
-  EXPECT_CALL(mmath, ln(ARG)).WillOnce(::testing::Return(ARG_RES));
-  EXPECT_CALL(mmath, ln(BASE)).WillOnce(::testing::Return(BASE_RES));
-  double res = mmath.log(ARG, BASE);
+  mock_base_math mbmath(10000);
+  EXPECT_CALL(mbmath, ln(ARG)).WillOnce(::testing::Return(ARG_RES));
+  EXPECT_CALL(mbmath, ln(BASE)).WillOnce(::testing::Return(BASE_RES));
+  double res = mbmath.log(ARG, BASE);
   EXPECT_NEAR(res, ARG_RES / BASE_RES, 1e-6);
 }

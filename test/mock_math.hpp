@@ -11,3 +11,10 @@ public:
   MOCK_METHOD(double, cos, (double x), (override, const));
   MOCK_METHOD(double, ln, (double x), (override, const));
 };
+
+class mock_ext_math : public full_math {
+public:
+  using full_math::full_math;
+  MOCK_METHOD(double, sec, (double x), (override, const));
+  MOCK_METHOD(double, log, (double x, double base), (override, const));
+};

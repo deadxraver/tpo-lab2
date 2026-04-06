@@ -76,3 +76,19 @@ TEST(math_ext_test, negative_values_in) {
   res = memath.mega_function(NEG_VAL2);
   EXPECT_NEAR(res, NEG_RET2, 1e-4);
 }
+
+TEST(math_ext_test, only_ext_mocked) {
+  mock_onlyext_math moemath(PRECISION);
+  double res;
+  EXPECT_CALL(moemath, log(POS_VAL2, 10)).WillOnce(::testing::Return(POS_LOG10_RET));
+  EXPECT_CALL(moemath, log(POS_VAL2, 2))
+    .Times(2)
+    .WillRepeatedly(::testing::Return(POS_LOG2_RET));
+  EXPECT_CALL(moemath, log(POS_VAL2, 3)).WillOnce(::testing::Return(POS_LOG3_RET));
+  res = moemath.mega_function(POS_VAL2);
+  EXPECT_NEAR(res, POS_RET2, 1e-3);
+
+  EXPECT_CALL(moemath, sec(NEG_VAL2)).WillOnce(::testing::Return(NEG_SEC_RET2));
+  res = moemath.mega_function(NEG_VAL2);
+  EXPECT_NEAR(res, NEG_RET2, 1e-4);
+}

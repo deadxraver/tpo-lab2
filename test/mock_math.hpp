@@ -18,3 +18,10 @@ public:
   MOCK_METHOD(double, sec, (double x), (override, const));
   MOCK_METHOD(double, log, (double x, double base), (override, const));
 };
+
+class mock_onlyext_math : public full_math {
+public:
+  using full_math::full_math;
+  MOCK_METHOD(double, sec, (double x), (override, const));
+  MOCK_METHOD(double, log, (double x, double base), (override, const));
+};

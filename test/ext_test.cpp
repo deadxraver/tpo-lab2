@@ -6,6 +6,13 @@ namespace {
 constexpr double POS_VAL1 = 1;
 constexpr double POS_RET1 = 0;
 
+constexpr double POS_VAL2 = 10;
+constexpr double POS_LOG10_RET = 1;
+constexpr double POS_LOG2_RET = 3.3219;
+constexpr double POS_LOG3_RET = 2.0959;
+constexpr double POS_LN_RET = 2.3026;
+constexpr double POS_RET2 = 9.9797;
+
 constexpr double PRECISION = 10000;
 }
 
@@ -23,4 +30,17 @@ TEST(math_ext_test, positive_values_in) {
   EXPECT_CALL(memath, sin(POS_VAL1)).Times(0);
   double res = memath.mega_function(POS_VAL1);
   EXPECT_NEAR(res, POS_RET1, 1e-6);
+
+  EXPECT_CALL(memath, log(POS_VAL2, 10)).WillOnce(::testing::Return(POS_LOG10_RET));
+  EXPECT_CALL(memath, log(POS_VAL2, 2))
+    .Times(2)
+    .WillRepeatedly(::testing::Return(POS_LOG2_RET));
+  EXPECT_CALL(memath, log(POS_VAL2, 3)).WillOnce(::testing::Return(POS_LOG3_RET));
+  EXPECT_CALL(memath, ln(POS_VAL2))
+    .Times(3)
+    .WillRepeatedly(::testing::Return(POS_LN_RET));
+  EXPECT_CALL(memath, cos(POS_VAL2)).Times(0);
+  EXPECT_CALL(memath, sin(POS_VAL2)).Times(0);
+  res = memath.mega_function(POS_VAL2);
+  EXPECT_NEAR(res, POS_RET2, 1e-3);
 }

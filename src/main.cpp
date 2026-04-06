@@ -17,9 +17,9 @@ int main(int argc, char* argv[]) {
   double eps = std::stod(argv[5]);
   full_math fm(eps);
   double res;
-  try {
-    std::cout << "x;" << method << "(x)\n";
-    for (double x = x_start; x <= x_stop; x += step) {
+  std::cout << "x;" << method << "(x)\n";
+  for (double x = x_start; x <= x_stop; x += step) {
+    try {
       if (method == "sin")
         res = fm.sin(x);
       else if (method == "cos")
@@ -36,13 +36,15 @@ int main(int argc, char* argv[]) {
         res = fm.log(x, 2);
       else if (method == "mega_function")
         res = fm.mega_function(x);
-      else
-        throw std::string("unknown function ") + method + ", available functions: " + available_functions;
+      else {
+        std::cerr << "unknown function " << method << ", available functions: " << available_functions << std::endl;
+        return -EINVAL;
+      }
       std::cout << x << ";" << res << std::endl;
+    } catch (std::string err) {
+      std::cerr << err << std::endl;
+      continue;
     }
-  } catch (std::string err) {
-    std::cerr << err << std::endl;
-    return -EINVAL;
   }
   return 0;
 }

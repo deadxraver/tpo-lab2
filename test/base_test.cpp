@@ -11,6 +11,8 @@ constexpr double LN_BASE_RES = 3.1;
 constexpr double COS_ARG = M_PI;
 constexpr double COS_RES = 1;
 
+constexpr double NEG_INV_VAL = -M_PI / 2;
+
 constexpr double PRECISION = 10000;
 }
 
@@ -29,4 +31,10 @@ TEST(math_base_test, sec_uses_cos) {
   EXPECT_CALL(mbmath, ln(COS_ARG)).Times(0);
   double res = mbmath.sec(COS_ARG);
   EXPECT_NEAR(res, 1 / COS_RES, 1e-6);
+}
+
+TEST(math_base_test, sec_throws_err) {
+  mock_base_math mbmath(PRECISION);
+  EXPECT_CALL(mbmath, cos(NEG_INV_VAL)).WillOnce(::testing::Return(0));
+  EXPECT_THROW(mbmath.sec(NEG_INV_VAL), std::string);
 }

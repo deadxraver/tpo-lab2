@@ -13,6 +13,18 @@ constexpr double POS_LOG3_RET = 2.0959;
 constexpr double POS_LN_RET = 2.3026;
 constexpr double POS_RET2 = 9.9797;
 
+constexpr double NEG_VAL1 = 0; // neg branch is x <= 0
+constexpr double NEG_COS_RET1 = 1;
+constexpr double NEG_SIN_RET1 = 0;
+constexpr double NEG_SEC_RET1 = 1;
+constexpr double NEG_RET1 = -1;
+
+constexpr double NEG_VAL2 = -M_PI / 4;
+constexpr double NEG_COS_RET2 = 0.7071;
+constexpr double NEG_SIN_RET2 = -0.7071;
+constexpr double NEG_SEC_RET2 = 1.4142;
+constexpr double NEG_RET2 = -2.5607;
+
 constexpr double PRECISION = 10000;
 }
 
@@ -43,4 +55,24 @@ TEST(math_ext_test, positive_values_in) {
   EXPECT_CALL(memath, sin(POS_VAL2)).Times(0);
   res = memath.mega_function(POS_VAL2);
   EXPECT_NEAR(res, POS_RET2, 1e-3);
+}
+
+TEST(math_ext_test, negative_values_in) {
+  mock_ext_math memath(PRECISION);
+  double res;
+  EXPECT_CALL(memath, cos(NEG_VAL1))
+    .Times(3)
+    .WillRepeatedly(::testing::Return(NEG_COS_RET1));
+  EXPECT_CALL(memath, sin(NEG_VAL1)).WillOnce(::testing::Return(NEG_SIN_RET1));
+  EXPECT_CALL(memath, sec(NEG_VAL1)).WillOnce(::testing::Return(NEG_SEC_RET1));
+  res = memath.mega_function(NEG_VAL1);
+  EXPECT_NEAR(res, NEG_RET1, 1e-6);
+
+  EXPECT_CALL(memath, cos(NEG_VAL2))
+    .Times(3)
+    .WillRepeatedly(::testing::Return(NEG_COS_RET2));
+  EXPECT_CALL(memath, sin(NEG_VAL2)).WillOnce(::testing::Return(NEG_SIN_RET2));
+  EXPECT_CALL(memath, sec(NEG_VAL2)).WillOnce(::testing::Return(NEG_SEC_RET2));
+  res = memath.mega_function(NEG_VAL2);
+  EXPECT_NEAR(res, NEG_RET2, 1e-4);
 }

@@ -2,16 +2,44 @@
 
 #include <iostream>
 
+std::string available_functions = "sin cos ln log3 log10 log2 mega_function";
+
 int main(int argc, char* argv[]) {
-  if (argc != 3) {
-    std::cerr << "Invalid arguements\n";
+  if (argc != 6) {
+    std::cerr << "Invalid arguements\nExpected:\n";
+    std::cerr << argv[0] << " <method> <x_start> <step> <x_stop> <precision>\n";
     return -EINVAL;
   }
-  double x = std::stod(argv[1]);
-  double eps = std::stod(argv[2]);
+  std::string method(argv[1]);
+  double x_start = std::stod(argv[2]);
+  double step = std::stod(argv[3]);
+  double x_stop = std::stod(argv[4]);
+  double eps = std::stod(argv[5]);
   full_math fm(eps);
+  double res;
   try {
-    std::cout << fm.mega_function(x) << std::endl;
+    std::cout << "x;" << method << "(x)\n";
+    for (double x = x_start; x <= x_stop; x += step) {
+      if (method == "sin")
+        res = fm.sin(x);
+      else if (method == "cos")
+        res = fm.cos(x);
+      else if (method == "ln")
+        res = fm.ln(x);
+      else if (method == "sec")
+        res = fm.sec(x);
+      else if (method == "log3")
+        res = fm.log(x, 3);
+      else if (method == "log10")
+        res = fm.log(x, 10);
+      else if (method == "log2")
+        res = fm.log(x, 2);
+      else if (method == "mega_function")
+        res = fm.mega_function(x);
+      else
+        throw std::string("unknown function ") + method + ", available functions: " + available_functions;
+      std::cout << x << ";" << res << std::endl;
+    }
   } catch (std::string err) {
     std::cerr << err << std::endl;
     return -EINVAL;

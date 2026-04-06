@@ -17,6 +17,8 @@ constexpr double NEG_RET1 = -1;
 constexpr double NEG_VAL2 = -M_PI / 4;
 constexpr double NEG_RET2 = -2.5607;
 
+constexpr double LN_INVAL = -1;
+
 constexpr double PRECISION = 10000;
 }
 
@@ -40,4 +42,9 @@ TEST(math_full_test, negative_values_in) {
 
   res = fmath.mega_function(NEG_VAL2);
   EXPECT_NEAR(res, NEG_RET2, 1e-4);
+}
+
+TEST(math_full_test, ln_negative_arg) {
+  full_math fmath(PRECISION);
+  EXPECT_THROW(fmath.ln(LN_INVAL), std::string);
 }
